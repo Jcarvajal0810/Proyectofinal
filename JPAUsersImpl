@@ -1,0 +1,61 @@
+package Service;
+import java.util.ArrayList;
+import java.util.List;
+
+public class JPAUsersImpl implements JPAUsers {
+    private static List<User> users = new ArrayList<>();
+
+    @Override
+    public void create(String body) {
+        User newUser = new User(0, "", 0, "", "", "", body, ""); // Crea un nuevo objeto User a partir del cuerpo recibido
+        users.add(newUser);
+    }
+
+    @Override
+    public List<User> readAll() {
+        return users;
+    }
+
+    @Override
+    public void updateById(String body, int id) {
+        User userToUpdate = findUserById(id);
+        if (userToUpdate != null) {
+            // Actualiza los datos del usuario con los valores proporcionados en el body
+            userToUpdate.setBody(body);
+        }
+    }
+
+    @Override
+    public void deleteById(int id) {
+        User userToDelete = findUserById(id);
+        if (userToDelete != null) {
+            users.remove(userToDelete);
+        }
+    }
+
+    @Override
+    public void findAll() {
+        for (User user : users) {
+            System.out.println(user);
+        }
+    }
+
+    @Override
+    public void findById(int id) {
+        User user = findUserById(id);
+        if (user != null) {
+            System.out.println(user);
+        } else {
+            System.out.println("No se encontró ningún usuario con el ID proporcionado.");
+        }
+    }
+
+    private User findUserById(int id) {
+        for (User user : users) {
+            if (user.getId() == id) {
+                return user;
+            }
+        }
+        return null;
+    }
+}
