@@ -1,0 +1,94 @@
+package customer;
+public class User {
+    private int id;
+    private String name;
+    private int age;
+    private String email;
+    private String phone;
+    private String headers;
+    private String body;
+    private String url;
+
+    public User(int id, String name, int age, String email, String phone, String headers, String body, String url) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.email = email;
+        this.phone = phone;
+        this.headers = headers;
+        this.body = body;
+        this.url = url;
+    }
+
+    // Métodos getter y setter para los nuevos campos
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public String getHeaders() {
+        return headers;
+    }
+
+    public void setHeaders(String headers) {
+        this.headers = headers;
+    }
+
+    public String getBody() {
+        return body;
+    }
+
+    public void setBody(String body) {
+        this.body = body;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    // Resto de los métodos de la clase User
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return "ID: " + id + ", Nombre: " + name + ", Edad: " + age + ", Email: " + email + ", Teléfono: " + phone;
+    }
+}
