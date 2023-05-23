@@ -1,0 +1,39 @@
+package controller;
+public class Server {
+    private String method;
+    private String url;
+    private String headers;
+    private String body;
+    private String correo;
+    private String email;
+
+    public Server(String method, String url, String headers, String body) {
+        this.method = method;
+        this.url = url;
+        this.headers = headers;
+        this.body = body;
+    }
+
+    public void setCorreo(String correo) {
+        this.correo = correo;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void procesarRequest() {
+        // Lógica para procesar la request
+        System.out.println("Procesando la request...");
+        System.out.println("Método HTTP: " + method);
+        System.out.println("URL: " + url);
+        System.out.println("Headers: " + headers);
+        System.out.println("Body: " + body);
+
+        // Aquí puedes establecer los valores del correo y el email en la respuesta del servidor
+        correo = "Correo de ejemplo";
+        email = "email@example.com";
+
+        System.out.println("Request procesada exitosamente.");
+    }
+}
