@@ -1,0 +1,23 @@
+public class ClienteHTTP {
+    private String url;
+    private String headers;
+    private String method;
+    private String body;
+
+    public ClienteHTTP(String url, String headers, String method, String body) {
+        this.url = url;
+        this.headers = headers;
+        this.method = method;
+        this.body = body;
+    }
+
+    public void enviarRequest() {
+        // Lógica para enviar la request al servidor
+        System.out.println("Enviando la request al servidor...");
+        System.out.println("URL: " + url);
+        System.out.println("Headers: " + headers);
+        System.out.println("Método HTTP: " + method);
+        System.out.println("Body: " + body);
+        System.out.println("Request enviada exitosamente.");
+    }
+}
