@@ -1,0 +1,301 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+import java.util.Scanner;
+
+public class Main {
+
+    private static final int NUMERO_USUARIOS = 10;
+    private static int userIdCounter = 1;
+    private static List<User> users = new ArrayList<>();
+
+    public static void main(String[] args) {
+        generarUsuariosAleatorios();
+
+        Scanner scanner = new Scanner(System.in);
+
+        int opcion;
+        do {
+            mostrarMenu();
+            opcion = leerOpcion(scanner);
+
+            switch (opcion) {
+                case 1:
+                    leerUsuarios();
+                    break;
+                case 2:
+                    encontrarUsuario(scanner);
+                    break;
+                case 3:
+                    crearUsuario(scanner);
+                    break;
+                case 4:
+                    editarUsuario(scanner);
+                    break;
+                case 5:
+                    eliminarUsuario(scanner);
+                    break;
+                case 6:
+                    System.out.println("Saliendo del programa...");
+                    break;
+                default:
+                    System.out.println("Opción inválida. Por favor, ingrese una opción válida.");
+                    break;
+            }
+        } while (opcion != 6);
+
+        scanner.close();
+    }
+
+    private static void generarUsuariosAleatorios() {
+        Random random = new Random();
+
+        for (int i = 0; i < NUMERO_USUARIOS; i++) {
+            String name = generarNombreAleatorio();
+            int age = random.nextInt(80) + 1; // Genera una edad aleatoria entre 1 y 80
+            String email = generarEmailAleatorio();
+            String phone = generarTelefonoAleatorio();
+            String headers = generarHeadersAleatorios();
+            String body = generarBodyAleatorio();
+            String url = generarUrlAleatoria();
+            User user = new User(getNextUserId(), name, age, email, phone, headers, body, url);
+            users.add(user);
+        }
+    }
+
+    private static String generarNombreAleatorio() {
+        String[] names = { "Juan", "María", "Carlos", "Ana", "Pedro", "Laura", "Diego", "Valentina", "Andrés", "Sofía" };
+        String[] surnames = { "García", "López", "Martínez", "Rodríguez", "González", "Pérez", "Fernández", "Gómez", "Navarro", "Vargas" };
+
+        Random random = new Random();
+        String name = names[random.nextInt(names.length)];
+        String surname = surnames[random.nextInt(surnames.length)];
+
+        return name + " " + surname;
+    }
+
+    private static String generarEmailAleatorio() {
+        String[] domains = { "gmail.com", "yahoo.com", "hotmail.com", "outlook.com", "example.com" };
+
+        Random random = new Random();
+        String username = generarNombreAleatorio().toLowerCase().replaceAll(" ", "");
+        String domain = domains[random.nextInt(domains.length)];
+
+        return username + "@" + domain;
+    }
+
+    private static String generarTelefonoAleatorio() {
+        Random random = new Random();
+        StringBuilder phone = new StringBuilder();
+
+        for (int i = 0; i < 10; i++) {
+            int digit = random.nextInt(10);
+            phone.append(digit);
+        }
+
+        return phone.toString();
+    }
+
+    private static String generarHeadersAleatorios() {
+        String[] headers = { "Content-Type: application/json", "Authorization: Bearer token123", "Accept-Language: en-US", "X-Request-ID: 987654321" };
+
+        Random random = new Random();
+        int index = random.nextInt(headers.length);
+
+        return headers[index];
+    }
+
+    private static String generarBodyAleatorio() {
+        String[] bodies = { "{\"name\": \"John\", \"age\": 30}", "{\"title\": \"Hello\", \"content\": \"This is a sample message.\"}", "{\"user\": \"Alice\", \"role\": \"admin\"}" };
+
+        Random random = new Random();
+        int index = random.nextInt(bodies.length);
+
+        return bodies[index];
+    }
+
+    private static String generarUrlAleatoria() {
+        String[] urls = { "https://api.example.com/users", "https://api.example.com/posts", "https://api.example.com/products", "https://api.example.com/orders" };
+
+        Random random = new Random();
+        int index = random.nextInt(urls.length);
+
+        return urls[index];
+    }
+
+    private static int getNextUserId() {
+        return userIdCounter++;
+    }
+
+    private static void leerUsuarios() {
+        System.out.println("----- Leer usuarios existentes -----");
+        for (User user : users) {
+            System.out.println("ID: " + user.getId() + ", Nombre: " + user.getName() + ", Edad: " + user.getAge() +
+                    ", Email: " + user.getEmail() + ", Teléfono: " + user.getPhone() +
+                    ", Headers: " + user.getHeaders() + ", Body: " + user.getBody() + ", URL: " + user.getUrl());
+        }
+    }
+
+    private static void encontrarUsuario(Scanner scanner) {
+        System.out.println("----- Encontrar un usuario -----");
+        System.out.print("Ingrese el ID del usuario a encontrar: ");
+        String userIdStr = scanner.nextLine();
+
+        if (esEntero(userIdStr)) {
+            int userId = Integer.parseInt(userIdStr);
+            User user = buscarUsuario(userId);
+            if (user != null) {
+                System.out.println("Usuario encontrado:");
+                System.out.println("ID: " + user.getId() + ", Nombre: " + user.getName() + ", Edad: " + user.getAge() +
+                        ", Email: " + user.getEmail() + ", Teléfono: " + user.getPhone() +
+                        ", Headers: " + user.getHeaders() + ", Body: " + user.getBody() + ", URL: " + user.getUrl());
+            } else {
+                System.out.println("No se encontró ningún usuario con el ID proporcionado.");
+            }
+        } else {
+            System.out.println("ID inválido. Por favor, ingrese un ID válido.");
+        }
+    }
+
+    private static void crearUsuario(Scanner scanner) {
+        System.out.println("----- Crear un usuario -----");
+        System.out.print("Ingrese el ID del usuario: ");
+        String idStr = scanner.nextLine();
+        System.out.print("Ingrese el nombre del usuario: ");
+        String name = scanner.nextLine();
+        System.out.print("Ingrese la edad del usuario: ");
+        String ageStr = scanner.nextLine();
+        System.out.print("Ingrese el correo electrónico del usuario: ");
+        String email = scanner.nextLine();
+        System.out.print("Ingrese el teléfono del usuario: ");
+        String phone = scanner.nextLine();
+        System.out.print("Ingrese los headers del usuario: ");
+        String headers = scanner.nextLine();
+        System.out.print("Ingrese el body del usuario: ");
+        String body = scanner.nextLine();
+        System.out.print("Ingrese la URL del usuario: ");
+        String url = scanner.nextLine();
+
+        if (esEntero(idStr) && esEntero(ageStr)) {
+            int id = Integer.parseInt(idStr);
+            int age = Integer.parseInt(ageStr);
+            User user = new User(id, name, age, email, phone, headers, body, url);
+            users.add(user);
+            System.out.println("Usuario creado exitosamente.");
+        } else {
+            System.out.println("ID o edad inválida. Por favor, ingrese un ID y una edad válida.");
+        }
+    }
+
+    private static void editarUsuario(Scanner scanner) {
+        System.out.println("----- Editar la información de un usuario existente -----");
+        System.out.print("Ingrese el ID del usuario a editar: ");
+        String userIdStr = scanner.nextLine();
+
+        if (esEntero(userIdStr)) {
+            int userId = Integer.parseInt(userIdStr);
+            User user = buscarUsuario(userId);
+            if (user != null) {
+                System.out.println("Usuario encontrado:");
+                System.out.println("ID: " + user.getId() + ", Nombre: " + user.getName() + ", Edad: " + user.getAge() +
+                        ", Email: " + user.getEmail() + ", Teléfono: " + user.getPhone() +
+                        ", Headers: " + user.getHeaders() + ", Body: " + user.getBody() + ", URL: " + user.getUrl());
+
+                System.out.print("Ingrese el nuevo nombre del usuario: ");
+                String newName = scanner.nextLine();
+                System.out.print("Ingrese la nueva edad del usuario: ");
+                String newAgeStr = scanner.nextLine();
+                System.out.print("Ingrese el nuevo correo electrónico del usuario: ");
+                String newEmail = scanner.nextLine();
+                System.out.print("Ingrese el nuevo teléfono del usuario: ");
+                String newPhone = scanner.nextLine();
+                System.out.print("Ingrese los nuevos headers del usuario: ");
+                String newHeaders = scanner.nextLine();
+                System.out.print("Ingrese el nuevo body del usuario: ");
+                String newBody = scanner.nextLine();
+                System.out.print("Ingrese la nueva URL del usuario: ");
+                String newUrl = scanner.nextLine();
+
+                if (esEntero(newAgeStr)) {
+                    int newAge = Integer.parseInt(newAgeStr);
+                    user.setName(newName);
+                    user.setAge(newAge);
+                    user.setEmail(newEmail);
+                    user.setPhone(newPhone);
+                    user.setHeaders(newHeaders);
+                    user.setBody(newBody);
+                    user.setUrl(newUrl);
+                    System.out.println("Información del usuario actualizada exitosamente.");
+                } else {
+                    System.out.println("Edad inválida. No se pudo actualizar la información del usuario.");
+                }
+            } else {
+                System.out.println("No se encontró ningún usuario con el ID proporcionado.");
+            }
+        } else {
+            System.out.println("ID inválido. Por favor, ingrese un ID válido.");
+        }
+    }
+
+    private static void eliminarUsuario(Scanner scanner) {
+        System.out.println("----- Eliminar un usuario -----");
+        System.out.print("Ingrese el ID del usuario a eliminar: ");
+        String userIdStr = scanner.nextLine();
+
+        if (esEntero(userIdStr)) {
+            int userId = Integer.parseInt(userIdStr);
+            User user = buscarUsuario(userId);
+            if (user != null) {
+                System.out.println("Usuario encontrado:");
+                System.out.println("ID: " + user.getId() + ", Nombre: " + user.getName() + ", Edad: " + user.getAge() +
+                        ", Email: " + user.getEmail() + ", Teléfono: " + user.getPhone() +
+                        ", Headers: " + user.getHeaders() + ", Body: " + user.getBody() + ", URL: " + user.getUrl());
+                users.remove(user);
+                System.out.println("Usuario eliminado exitosamente.");
+            } else {
+                System.out.println("No se encontró ningún usuario con el ID proporcionado.");
+            }
+        } else {
+            System.out.println("ID inválido. Por favor, ingrese un ID válido.");
+        }
+    }
+
+    private static boolean esEntero(String str) {
+        try {
+            Integer.parseInt(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("----- Menú -----");
+        System.out.println("1. Leer usuarios existentes");
+        System.out.println("2. Encontrar un usuario");
+        System.out.println("3. Crear un usuario");
+        System.out.println("4. Editar la información de un usuario existente");
+        System.out.println("5. Eliminar un usuario");
+        System.out.println("6. Salir");
+        System.out.print("Ingrese una opción: ");
+    }
+
+    private static int leerOpcion(Scanner scanner) {
+        String opcionStr = scanner.nextLine();
+
+        if (esEntero(opcionStr)) {
+            return Integer.parseInt(opcionStr);
+        } else {
+            return -1;
+        }
+    }
+
+    private static User buscarUsuario(int userId) {
+        for (User user : users) {
+            if (user.getId() == userId) {
+                return user;
+            }
+        }
+        return null;
+    }
+}
